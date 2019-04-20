@@ -40,7 +40,8 @@ namespace ConsoleApp.Teste
             //var userDetails = testClass.GetUserDetailsTest("broncasrafa");
             //var savedUserMedias = testClass.GetSavedUserMediasTest();
             //var taggedUserMedias = testClass.GetTaggedUserMediasTest("764283413");
-            //var userActivity = testClass.GetUserActivityTest();
+            //var userActivitySummary = testClass.GetUserActivitySummaryTest();
+            //var userActivityFeed = testClass.GetUserActivityFeedTest();
             //var recentsUserStories = testClass.GetRecentsFollowingUsersStoriesTest();
             //var recentsUserStories = testClass.GetRecentsStoriesByUserIdTest("195539792");
             //var destaquesUserStories = testClass.GetFeaturedStoriesByUserIdTest("195539792");
@@ -51,7 +52,12 @@ namespace ConsoleApp.Teste
             //var discover = testClass.GetWebDiscoverMedia();
             //var unlike = testClass.Unlike("2025489851503291996");
             //var like = testClass.Like("2025489851503291996");
-
+            //var hashtagInit = testClass.GetHashtagMediaInitTest("dragon ball");
+            //var hashtag = testClass.GetHashtagMedias("dragon ball", hashtagInit.EdgeHashtagToMedia.PageInfo.EndCursor, 24);
+            //var userInfo = testClass.GetUserInfoTest();
+            //var requestDownloadData = testClass.RequestDownloadDataInformationTest("broncasrafa@gmail.com");
+            //var timelineMediasInit = testClass.GetUserTimelineMediasTest();
+            //var timelineMedias = testClass.GetUserTimelineMediasTest(timelineMediasInit.PageInfo.EndCursor);
             // barbralis
 
             //var query = "#CCXP 2018";

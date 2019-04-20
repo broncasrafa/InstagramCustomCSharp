@@ -43,6 +43,11 @@ namespace ConsoleApp.Teste
             return _InstagramCustomApi.GetUserDetails(username).Data;
         }
 
+        public EdgeWebFeedTimeline GetUserTimelineMediasTest(string endCursor = null)
+        {
+            return _InstagramCustomApi.GetUserTimelineMedias(endCursor).Data;
+        }
+
         public EdgeSavedMedia GetSavedUserMediasTest()
         {
             return _InstagramCustomApi.GetSavedUserMedias().Data;
@@ -53,9 +58,14 @@ namespace ConsoleApp.Teste
             return _InstagramCustomApi.GetTaggedUserMedias(userId).Data;
         }
 
-        public EdgeActivityCount GetUserActivityTest()
+        public EdgeActivityCount GetUserActivitySummaryTest()
         {
-            return _InstagramCustomApi.GetUserActivity().Data;
+            return _InstagramCustomApi.GetUserActivitySummary().Data;
+        }
+
+        public ActivityFeed GetUserActivityFeedTest()
+        {
+            return _InstagramCustomApi.GetUserActivityFeed().Data;
         }
 
         public FeedReelsTray GetRecentsFollowingUsersStoriesTest()
@@ -106,6 +116,26 @@ namespace ConsoleApp.Teste
         public string Unlike(string mediaId)
         {
             return _InstagramCustomApi.Unlike(mediaId).Data;
+        }
+
+        public string RequestDownloadDataInformationTest(string email)
+        {
+            return _InstagramCustomApi.RequestDownloadDataInformation(email).Data;
+        }
+
+        public Hashtag GetHashtagMediaInitTest(string hashtag)
+        {
+            return _InstagramCustomApi.GetHashtag(hashtag).Data;
+        }
+
+        public EdgeHashtagToMedia GetHashtagMediasTest(string hashtag, string endCursor, int limitPerPage = 12)
+        {
+            return _InstagramCustomApi.GetHashtagMedias(hashtag, endCursor, limitPerPage).Data;
+        }
+
+        public UserInfo GetUserInfoTest()
+        {
+            return _InstagramCustomApi.GetUserInfo().Data;
         }
     }
 }

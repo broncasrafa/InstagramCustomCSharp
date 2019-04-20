@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActivityFeed.cs" />
     <Compile Include="DashInfo.cs" />
     <Compile Include="Dimensions.cs" />
     <Compile Include="DisplayResource.cs" />
@@ -52,19 +53,24 @@
     <Compile Include="EdgeFollow.cs" />
     <Compile Include="EdgeFollowedBy.cs" />
     <Compile Include="EdgeFollowingHashtag.cs" />
+    <Compile Include="EdgeHashtagToMedia.cs" />
+    <Compile Include="EdgeHashtagToTopPosts.cs" />
     <Compile Include="EdgeHighlightReels.cs" />
     <Compile Include="EdgeLikedBy.cs" />
     <Compile Include="EdgeMediaPreviewComment.cs" />
     <Compile Include="EdgeMediaPreviewLike.cs" />
     <Compile Include="EdgeMediaToCaption.cs" />
     <Compile Include="EdgeMediaToComment.cs" />
+    <Compile Include="EdgeMediaToParentComment.cs" />
     <Compile Include="EdgeMediaToTaggedUser.cs" />
     <Compile Include="EdgeMutualFollowedBy.cs" />
     <Compile Include="EdgeOwnerToTimelineMedia.cs" />
     <Compile Include="EdgeReelsTrayToReel.cs" />
     <Compile Include="EdgeSavedMedia.cs" />
     <Compile Include="EdgeSidecarToChildren.cs" />
+    <Compile Include="EdgeThreadedComments.cs" />
     <Compile Include="EdgeUserToPhotosOfYou.cs" />
+    <Compile Include="EdgeWebActivityFeed.cs" />
     <Compile Include="EdgeWebDiscoverMedia.cs" />
     <Compile Include="EdgeWebFeedTimeline.cs" />
     <Compile Include="FeedReelsTray.cs" />
@@ -80,6 +86,7 @@
     <Compile Include="ShortcodeMedia.cs" />
     <Compile Include="ShortcodeMediaData.cs" />
     <Compile Include="Story.cs" />
+    <Compile Include="TagData.cs" />
     <Compile Include="ThumbnailResource.cs" />
     <Compile Include="User.cs" />
     <Compile Include="UserData.cs" />

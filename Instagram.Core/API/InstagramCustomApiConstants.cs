@@ -19,13 +19,22 @@ namespace Instagram.Core.API
         public const string LOGIN_RESPONSE_URL = INSTAGRAM_URL + "/accounts/login/ajax/";
 
         //public const string USER_DATA_URL = INSTAGRAM_URL + "/{0}/?__a=1";
+        public const string USER_INFO_URL = INSTAGRAM_URL + "/accounts/edit/?__a=1";
+
         public const string USER_DATA_URL = INSTAGRAM_URL + "/{0}";
+
         public const string SHORTCODE_URL = INSTAGRAM_URL + "/p/{0}/?__a=1";
+
+        public const string REQUEST_DOWNLOAD_DATA_URL = INSTAGRAM_URL + "/download/request_download_data_ajax/";
+
+        public const string EXPLORE_TAG_DATA_INIT = INSTAGRAM_URL + "/explore/tags/{0}";
+        public const string EXPLORE_TAG_DATA = "https://www.instagram.com/graphql/query/?query_hash=f92f56d47dc7a55b606908374b43a314&variables=%7B%22tag_name%22%3A%22{0}%22%2C%22show_ranked%22%3Afalse%2C%22first%22%3A{1}%2C%22after%22%3A%22{2}%22%7D";
+        public const string EXPLORE_TAG_SHORTCODE_DATA = "https://www.instagram.com/graphql/query/?query_hash=477b65a610463740ccdb83135b2014db&variables=%7B%22shortcode%22%3A%22{0}%22%2C%22child_comment_count%22%3A10%2C%22fetch_comment_count%22%3A40%2C%22parent_comment_count%22%3A24%2C%22has_threaded_comments%22%3Atrue%7D";
 
         public const string SEARCH_URL = "https://www.instagram.com/web/search/topsearch/?context=blended&query={0}&rank_token=0.4047735978789335&include_reel=true";
 
-        public const string USER_ACTIVITY = "https://www.instagram.com/graphql/query/?query_hash=0f318e8cfff9cc9ef09f88479ff571fb&variables=%7B%22id%22%3A%22{0}%22%7D";
-
+        public const string USER_ACTIVITY_SUMMARY = "https://www.instagram.com/graphql/query/?query_hash=0f318e8cfff9cc9ef09f88479ff571fb&variables=%7B%22id%22%3A%22{0}%22%7D";
+        public const string USER_ACTIVITY_FEED = INSTAGRAM_URL + "/accounts/activity/?__a=1&include_reel=true";
 
         // https://www.instagram.com/graphql/query/?query_hash=ae21d996d1918b725a934c0ed7f59a74&variables=%7B%22fetch_media_count%22%3A0%2C%22fetch_suggested_count%22%3A30%2C%22ignore_cache%22%3Atrue%2C%22filter_followed_friends%22%3Atrue%2C%22seen_ids%22%3A%5B%5D%2C%22include_reel%22%3Atrue%7D
         public const string SUGGESTED_USERS = "https://www.instagram.com/graphql/query/?query_hash=7c16654f22c819fb63d1183034a5162f&variables=%7B%22user_id%22%3A%22{0}%22%2C%22include_chaining%22%3Atrue%2C%22include_reel%22%3Atrue%2C%22include_suggested_users%22%3Atrue%2C%22include_logged_out_extras%22%3Afalse%2C%22include_highlight_reels%22%3Atrue%7D";
@@ -33,6 +42,9 @@ namespace Instagram.Core.API
         public const string USER_TIMELINE_URL = "https://www.instagram.com/graphql/query/?query_hash=f2405b236d85e8296cf30347c9f08c2a&variables=%7B%22id%22%3A%22{0}%22%2C%22first%22%3A{1}%2C%22after%22%3A%22{2}%22%7D";
 
         public const string USER_SAVED_MEDIAS_URL = "https://www.instagram.com/graphql/query/?query_hash=8c86fed24fa03a8a2eea2a70a80c7b6b&variables=%7B%22id%22%3A%22{0}%22%2C%22first%22%3A{1}%2C%22after%22%3A%22{2}%22%7D";
+
+        public const string USER_TIMELINE_MEDIAS_INIT = "https://www.instagram.com/graphql/query/?query_hash=e59e186af2a0f74e2477de230f68d30c&variables=%7B%22has_threaded_comments%22%3Atrue%7D";
+        public const string USER_TIMELINE_MEDIAS = "https://www.instagram.com/graphql/query/?query_hash=e59e186af2a0f74e2477de230f68d30c&variables=%7B%22cached_feed_item_ids%22%3A%5B%5D%2C%22fetch_media_item_count%22%3A12%2C%22fetch_media_item_cursor%22%3A%22{0}%22%2C%22fetch_comment_count%22%3A4%2C%22fetch_like%22%3A3%2C%22has_stories%22%3Afalse%2C%22has_threaded_comments%22%3Atrue%7D";
 
         public const string USER_TO_PHOTOS_OF_YOU_INIT = "https://www.instagram.com/graphql/query/?query_hash=ff260833edf142911047af6024eb634a&variables=%7B%22id%22%3A%22{0}%22%2C%22first%22%3A{1}%7D";
         public const string USER_TO_PHOTOS_OF_YOU = "https://www.instagram.com/graphql/query/?query_hash=ff260833edf142911047af6024eb634a&variables=%7B%22id%22%3A%22{0}%22%2C%22first%22%3A{1}%2C%22after%22%3A%22{2}%22%7D";

@@ -51,7 +51,9 @@
     <Compile Include="API\InstagramCustomApi.cs" />
     <Compile Include="API\InstagramCustomApiConstants.cs" />
     <Compile Include="API\Services\ActionsService.cs" />
+    <Compile Include="API\Services\HashtagService.cs" />
     <Compile Include="API\Services\Interfaces\IActionsService.cs" />
+    <Compile Include="API\Services\Interfaces\IHashtagService.cs" />
     <Compile Include="API\Services\Interfaces\ISearchService.cs" />
     <Compile Include="API\Services\Interfaces\IUserService.cs" />
     <Compile Include="API\Services\SearchService.cs" />
@@ -65,6 +67,7 @@
     <Compile Include="Classes\Result.cs" />
     <Compile Include="Classes\ResultInfo.cs" />
     <Compile Include="Classes\UserSessionData.cs" />
+    <Compile Include="Helpers\ApplicationHelper.cs" />
     <Compile Include="Helpers\CustomExtensions.cs" />
     <Compile Include="Helpers\ErrorHandlingHelper.cs" />
     <Compile Include="Helpers\HttpHelper.cs" />

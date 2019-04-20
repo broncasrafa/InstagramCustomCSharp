@@ -50,6 +50,33 @@ namespace Instagram.Core.API.Services
                 return Result.Fail<EdgeOwnerToTimelineMediaNode>(ex.Message);
             }
         }
+        public IResult<UserInfo> GetUserInfo()
+        {
+            try
+            {
+                var uri = InstagramCustomApiConstants.USER_INFO_URL;
+
+                var request = HttpHelper.GetDefaultRequest(uri);
+                request.Headers["Cookie"] = _user.UserCookie;
+
+                var response = HttpHelper.GetDefaultResponse(request);
+                var json = response.ReadAsString();
+
+                if (response.StatusCode != HttpStatusCode.OK)
+                {
+                    return Result.UnExpectedResponse<UserInfo>(response, json);
+                }
+
+                var objRetorno = JsonConvert.DeserializeObject<UserInfoData>(json);
+                var userInfo = objRetorno.UserInfo;
+
+                return Result.Success(userInfo);
+            }
+            catch (Exception ex)
+            {
+                return Result.Fail<UserInfo>(ex.Message);
+            }
+        }
         public IResult<User> GetUser(string username)
         {
             try
@@ -61,7 +88,7 @@ namespace Instagram.Core.API.Services
 
                 var response = HttpHelper.GetDefaultResponse(request);
                 var html = response.ReadAsString();
-                var json = ExtractJsonFromHtml(html);
+                var json = ApplicationHelper.ExtractJsonFromHtml(html);
 
                 if(response.StatusCode != HttpStatusCode.OK)
                 {
@@ -91,7 +118,7 @@ namespace Instagram.Core.API.Services
 
                 var response = HttpHelper.GetDefaultResponse(request);
                 var html = response.ReadAsString();
-                var json = ExtractJsonFromHtml(html);
+                var json = ApplicationHelper.ExtractJsonFromHtml(html);
 
                 if (response.StatusCode != HttpStatusCode.OK)
                 {
@@ -119,7 +146,7 @@ namespace Instagram.Core.API.Services
                 var uri = string.Format(InstagramCustomApiConstants.DISCOVER_MEDIAS_URL, limitPerPage, endCursor);
 
                 var variables = string.Format("{0}:{{\"first\":{1},\"after\":\"{2}\"}}", _user.UserRhxGis, limitPerPage, endCursor);
-                var signature = CreateMD5(variables);
+                var signature = ApplicationHelper.CreateMD5(variables);
 
                 var request = HttpHelper.GetDefaultRequest(uri);
                 request.Headers["X-Instagram-GIS"] = signature;
@@ -143,11 +170,11 @@ namespace Instagram.Core.API.Services
                 return Result.Fail<User>(ex.Message);
             }
         }
-        public IResult<EdgeActivityCount> GetUserActivity()
+        public IResult<EdgeActivityCount> GetUserActivitySummary()
         {
             try
             {
-                var uri = string.Format(InstagramCustomApiConstants.USER_ACTIVITY, _user.UserId);
+                var uri = string.Format(InstagramCustomApiConstants.USER_ACTIVITY_SUMMARY, _user.UserId);
 
                 var request = HttpHelper.GetDefaultRequest(uri);
                 request.Headers["Cookie"] = _user.UserCookie;
@@ -170,6 +197,33 @@ namespace Instagram.Core.API.Services
                 return Result.Fail<EdgeActivityCount>(ex.Message);
             }
         }
+        public IResult<ActivityFeed> GetUserActivityFeed()
+        {
+            try
+            {
+                var uri = InstagramCustomApiConstants.USER_ACTIVITY_FEED;
+
+                var request = HttpHelper.GetDefaultRequest(uri);
+                request.Headers["Cookie"] = _user.UserCookie;
+
+                var response = HttpHelper.GetDefaultResponse(request);
+                var json = response.ReadAsString();
+
+                if (response.StatusCode != HttpStatusCode.OK)
+                {
+                    return Result.UnExpectedResponse<ActivityFeed>(response, json);
+                }
+
+                var objRetorno = JsonConvert.DeserializeObject<ProfilePage>(json);
+                var activity = objRetorno.Graphql.User.ActivityFeed;
+
+                return Result.Success(activity);
+            }
+            catch (Exception ex)
+            {
+                return Result.Fail<ActivityFeed>(ex.Message);
+            }
+        }
         public IResult<EdgeOwnerToTimelineMedia> GetUserMedias(string userid, string endCursor, int limitPerPage = 12)
         {
             try
@@ -177,7 +231,7 @@ namespace Instagram.Core.API.Services
                 var uri = string.Format(InstagramCustomApiConstants.USER_TIMELINE_URL, userid, limitPerPage, endCursor);
 
                 var variables = string.Format("{0}:{{\"id\":\"{1}\",\"first\":{2},\"after\":\"{3}\"}}", _user.UserRhxGis, userid, limitPerPage, endCursor);
-                var signature = CreateMD5(variables);
+                var signature = ApplicationHelper.CreateMD5(variables);
 
                 var request = HttpHelper.GetDefaultRequest(uri);
                 request.Headers["X-Instagram-GIS"] = signature;
@@ -236,6 +290,50 @@ namespace Instagram.Core.API.Services
             }
 
             return Result.Success(EdgeOwnerToTimelineMedia);
+        }
+        public IResult<EdgeWebFeedTimeline> GetUserTimelineMedias(string endCursor = null)
+        {
+            try
+            {
+                var uri = "";
+                var variables = "";
+                var signature = "";
+                HttpWebRequest request = null;
+
+                if (String.IsNullOrEmpty(endCursor))
+                {
+                    uri = InstagramCustomApiConstants.USER_TIMELINE_MEDIAS_INIT;
+                    request = HttpHelper.GetDefaultRequest(uri);
+                    request.Headers["Cookie"] = _user.UserCookie;                    
+                }
+                else
+                {
+                    uri = string.Format(InstagramCustomApiConstants.USER_TIMELINE_MEDIAS, endCursor);
+                    variables = string.Format("{0}:{{\"cached_feed_item_ids\":[],\"fetch_media_item_count\":12,\"fetch_media_item_cursor\":\"{0}\",\"fetch_comment_count\":4,\"fetch_like\":3,\"has_stories\":false,\"has_threaded_comments\":true}}", _user.UserRhxGis, endCursor);
+                    signature = ApplicationHelper.CreateMD5(variables);
+
+                    request = HttpHelper.GetDefaultRequest(uri);
+                    request.Headers["Cookie"] = _user.UserCookie;
+                    request.Headers["X-Instagram-GIS"] = signature;
+                }
+                                                
+                var response = HttpHelper.GetDefaultResponse(request);
+                var json = response.ReadAsString();
+
+                if (response.StatusCode != HttpStatusCode.OK)
+                {
+                    return Result.UnExpectedResponse<EdgeWebFeedTimeline>(response, json);
+                }
+
+                var objRetorno = JsonConvert.DeserializeObject<UserMedias>(json);
+                var medias = objRetorno.Data.User.EdgeWebFeedTimeline;
+
+                return Result.Success(medias);
+            }
+            catch (Exception ex)
+            {
+                return Result.Fail<EdgeWebFeedTimeline>(ex.Message);
+            }
         }
         public IResult<EdgeSavedMedia> GetSavedUserMedias(int limitPerPage = 12)
         {
@@ -315,7 +413,7 @@ namespace Instagram.Core.API.Services
             {
                 var uriInit = string.Format(InstagramCustomApiConstants.USER_FOLLOWERS_INIT, userId, limitPerPage);
                 var variablesInit = string.Format("{0}:{{\"id\":\"{1}\",\"first\":{2} }}", _user.UserRhxGis, userId, limitPerPage);
-                var signatureInit = CreateMD5(variablesInit);
+                var signatureInit = ApplicationHelper.CreateMD5(variablesInit);
 
                 var request = HttpHelper.GetDefaultRequest(uriInit);
                 request.Headers["X-Instagram-GIS"] = signatureInit;
@@ -342,7 +440,7 @@ namespace Instagram.Core.API.Services
                         var uri = string.Format(InstagramCustomApiConstants.USER_FOLLOWERS, userId, limitPerPage, endCursorFollowers);
 
                         var variablesMedias = string.Format("{0}:{{\"id\":\"{1}\",\"first\":{2},\"after\":\"{3}\"}}", _user.UserRhxGis, userId, limitPerPage, endCursorFollowers);
-                        var signatureMedias = CreateMD5(variablesMedias);
+                        var signatureMedias = ApplicationHelper.CreateMD5(variablesMedias);
 
                         var requestMedias = HttpHelper.GetDefaultRequest(uri);
                         requestMedias.Headers["X-Instagram-GIS"] = signatureMedias;
@@ -380,7 +478,7 @@ namespace Instagram.Core.API.Services
             {
                 var uriInit = string.Format(InstagramCustomApiConstants.USER_FOLLOWING_INIT, userId, limitPerPage);
                 var variablesInit = string.Format("{0}:{{\"id\":\"{1}\",\"first\":{2} }}", _user.UserRhxGis, userId, limitPerPage);
-                var signatureInit = CreateMD5(variablesInit);
+                var signatureInit = ApplicationHelper.CreateMD5(variablesInit);
 
                 var request = HttpHelper.GetDefaultRequest(uriInit);
                 request.Headers["X-Instagram-GIS"] = signatureInit;
@@ -407,7 +505,7 @@ namespace Instagram.Core.API.Services
                         var uri = string.Format(InstagramCustomApiConstants.USER_FOLLOWING, userId, limitPerPage, endCursorFollowing);
 
                         var variablesMedias = string.Format("{0}:{{\"id\":\"{1}\",\"first\":{2},\"after\":\"{3}\"}}", _user.UserRhxGis, userId, limitPerPage, endCursorFollowing);
-                        var signatureMedias = CreateMD5(variablesMedias);
+                        var signatureMedias = ApplicationHelper.CreateMD5(variablesMedias);
 
                         var requestMedias = HttpHelper.GetDefaultRequest(uri);
                         requestMedias.Headers["X-Instagram-GIS"] = signatureMedias;
@@ -445,7 +543,7 @@ namespace Instagram.Core.API.Services
             {
                 var uriInit = string.Format(InstagramCustomApiConstants.USER_FOLLOWING_HASHTAG, userId);
                 var variablesInit = string.Format("{0}:{{\"id\":\"{1}\"}}", _user.UserRhxGis, userId);
-                var signatureInit = CreateMD5(variablesInit);
+                var signatureInit = ApplicationHelper.CreateMD5(variablesInit);
 
                 var request = HttpHelper.GetDefaultRequest(uriInit);
                 request.Headers["X-Instagram-GIS"] = signatureInit;
@@ -556,7 +654,7 @@ namespace Instagram.Core.API.Services
                 var uri = string.Format(InstagramCustomApiConstants.DESTAQUES_DATA_STORIES_BY_USER_ID, GetFormattedHighlightReelIds(highlight_reel_ids));
 
                 var variables = string.Format("{0}:{{ \"reel_ids\":[],\"tag_names\":[],\"location_ids\":[],\"highlight_reel_ids\":[{0}],\"precomposed_overlay\":false,\"show_story_viewer_list\":true,\"story_viewer_fetch_count\":50,\"story_viewer_cursor\":\"\"}}", highlight_reel_ids);
-                var signature = CreateMD5(variables);
+                var signature = ApplicationHelper.CreateMD5(variables);
 
                 var request = HttpHelper.GetDefaultRequest(uri);
                 request.Headers["X-Instagram-GIS"] = signature;
@@ -614,36 +712,7 @@ namespace Instagram.Core.API.Services
 
 
 
-        #region [ Private Methods ]
-        private static string ExtractJsonFromHtml(string html)
-        {
-            var pattern = "<script type=\"text/javascript\">window._sharedData = (.*);</script>";
-
-            Regex regex = new Regex(pattern);
-
-            var json = regex.Match(html).Value.Replace("<script type=\"text/javascript\">window._sharedData = ", "").Replace(";</script>", "");
-
-            return json;
-        }
-        private static string CreateMD5(string input)
-        {
-            // Use input string to calculate MD5 hash
-            using (System.Security.Cryptography.MD5 md5 = System.Security.Cryptography.MD5.Create())
-            {
-                byte[] inputBytes = System.Text.Encoding.ASCII.GetBytes(input);
-                byte[] hashBytes = md5.ComputeHash(inputBytes);
-
-                // Convert the byte array to hexadecimal string
-                StringBuilder sb = new StringBuilder();
-
-                for (int i = 0; i < hashBytes.Length; i++)
-                {
-                    sb.Append(hashBytes[i].ToString("X2"));
-                }
-
-                return sb.ToString().ToLower();
-            }
-        }
+        #region [ Private Methods ]                
         private static string GetFormattedHighlightReelIds(string[] highlight_reel_ids)
         {
             //return string.Join("%22%2C%22", highlight_reel_ids);
@@ -666,7 +735,7 @@ namespace Instagram.Core.API.Services
                 var uri = string.Format(InstagramCustomApiConstants.USER_TIMELINE_URL, userId, limitPerPage, endCursor);
 
                 var variables = string.Format("{0}:{{\"id\":\"{1}\",\"first\":{2},\"after\":\"{3}\"}}", _user.UserRhxGis, userId, limitPerPage, endCursor);
-                var signature = CreateMD5(variables);
+                var signature = ApplicationHelper.CreateMD5(variables);
 
                 var request = HttpHelper.GetDefaultRequest(uri);
                 request.Headers["X-Instagram-GIS"] = signature;
@@ -693,7 +762,7 @@ namespace Instagram.Core.API.Services
                         var uriMedias = string.Format(InstagramCustomApiConstants.USER_TIMELINE_URL, userId, limitPerPage, endCursorMedias);
 
                         var variablesMedias = string.Format("{0}:{{\"id\":\"{1}\",\"first\":{2},\"after\":\"{3}\"}}", _user.UserRhxGis, userId, limitPerPage, endCursorMedias);
-                        var signatureMedias = CreateMD5(variablesMedias);
+                        var signatureMedias = ApplicationHelper.CreateMD5(variablesMedias);
 
                         var requestMedias = HttpHelper.GetDefaultRequest(uriMedias);
                         requestMedias.Headers["X-Instagram-GIS"] = signatureMedias;
@@ -744,7 +813,7 @@ namespace Instagram.Core.API.Services
                 var uri = string.Format(InstagramCustomApiConstants.USER_SAVED_MEDIAS_URL, userId, limitPerPage, endCursor);
 
                 var variables = string.Format("{0}:{{\"id\":\"{1}\",\"first\":{2},\"after\":\"{3}\"}}", _user.UserRhxGis, userId, limitPerPage, endCursor);
-                var signature = CreateMD5(variables);
+                var signature = ApplicationHelper.CreateMD5(variables);
 
                 var request = HttpHelper.GetDefaultRequest(uri);
                 request.Headers["X-Instagram-GIS"] = signature;
@@ -771,7 +840,7 @@ namespace Instagram.Core.API.Services
                         var uriMedias = string.Format(InstagramCustomApiConstants.USER_SAVED_MEDIAS_URL, userId, limitPerPage, endCursorMedias);
 
                         var variablesMedias = string.Format("{0}:{{\"id\":\"{1}\",\"first\":{2},\"after\":\"{3}\"}}", _user.UserRhxGis, userId, limitPerPage, endCursorMedias);
-                        var signatureMedias = CreateMD5(variablesMedias);
+                        var signatureMedias = ApplicationHelper.CreateMD5(variablesMedias);
 
                         var requestMedias = HttpHelper.GetDefaultRequest(uriMedias);
                         requestMedias.Headers["X-Instagram-GIS"] = signatureMedias;
@@ -839,7 +908,7 @@ namespace Instagram.Core.API.Services
             {
                 var uriInit = string.Format(InstagramCustomApiConstants.USER_TO_PHOTOS_OF_YOU_INIT, userId, limitPerPage);
                 var variablesInit = string.Format("{0}:{{\"id\":\"{1}\",\"first\":{2} }}", _user.UserRhxGis, userId, limitPerPage);
-                var signatureInit = CreateMD5(variablesInit);
+                var signatureInit = ApplicationHelper.CreateMD5(variablesInit);
 
                 var request = HttpHelper.GetDefaultRequest(uriInit);
                 request.Headers["X-Instagram-GIS"] = signatureInit;
@@ -866,7 +935,7 @@ namespace Instagram.Core.API.Services
                         var uriMedias = string.Format(InstagramCustomApiConstants.USER_TO_PHOTOS_OF_YOU, userId, limitPerPage, endCursorMedias);
 
                         var variablesMedias = string.Format("{0}:{{\"id\":\"{1}\",\"first\":{2},\"after\":\"{3}\"}}", _user.UserRhxGis, userId, limitPerPage, endCursorMedias);
-                        var signatureMedias = CreateMD5(variablesMedias);
+                        var signatureMedias = ApplicationHelper.CreateMD5(variablesMedias);
 
                         var requestMedias = HttpHelper.GetDefaultRequest(uriMedias);
                         requestMedias.Headers["X-Instagram-GIS"] = signatureMedias;
@@ -923,12 +992,7 @@ namespace Instagram.Core.API.Services
             {
                 return Result.Fail<EdgeUserToPhotosOfYouNode>(ex.Message);
             }
-        }
-
-        
-
-
-
+        }        
         #endregion
     }
 }

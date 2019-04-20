@@ -79,6 +79,9 @@ namespace Instagram.Entity
     {
         [JsonProperty("ProfilePage")]
         public List<ProfilePage> ProfilePage { get; set; }
+
+        [JsonProperty("TagPage")]
+        public List<TagPage> TagPage { get; set; }
     }
     public class ProfilePage
     {
@@ -92,5 +95,8 @@ namespace Instagram.Entity
     {
         [JsonProperty("user")]
         public User User { get; set; }
+
+        [JsonProperty("hashtag")]
+        public Hashtag Hashtag { get; set; }
     }
 }

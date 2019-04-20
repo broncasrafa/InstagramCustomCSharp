@@ -6,5 +6,6 @@ namespace Instagram.Core.API.Services.Interfaces
     {
         IResult<string> Like(string mediaId);
         IResult<string> Unlike(string mediaId);
+        IResult<string> RequestDownloadDataInformation(string email);
     }
 }

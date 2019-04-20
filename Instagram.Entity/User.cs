@@ -119,6 +119,9 @@ namespace Instagram.Entity
         [JsonProperty("feed_reels_tray")]
         public FeedReelsTray FeedReelsTray { get; set; }
 
+        [JsonProperty("activity_feed")]
+        public ActivityFeed ActivityFeed { get; set; }
+
         #region [ Search properties ]
         [JsonProperty("pk")]
         public string Pk { get; set; }
@@ -156,5 +159,58 @@ namespace Instagram.Entity
         [JsonProperty("unseen_count")]
         public int? UnseenCount { get; set; }
         #endregion
+    }
+
+    public class UserInfoData
+    {
+        [JsonProperty("form_data")]
+        public UserInfo UserInfo { get; set; }
+    }
+    public class UserInfo
+    {
+        [JsonProperty("first_name")]
+        public string Firstname { get; set; }
+
+        [JsonProperty("last_name")]
+        public string Lastname { get; set; }
+
+        [JsonProperty("email")]
+        public string Email { get; set; }
+
+        [JsonProperty("is_email_confirmed")]
+        public bool IsEmailConfirmed { get; set; }
+
+        [JsonProperty("is_phone_confirmed")]
+        public bool IsPhoneConfirmed { get; set; }
+
+        [JsonProperty("username")]
+        public string Username { get; set; }
+
+        [JsonProperty("phone_number")]
+        public string PhoneNumber { get; set; }
+
+        [JsonProperty("gender")]
+        public int Gender { get; set; }
+
+        [JsonProperty("birthday")]
+        public string Birthday { get; set; }
+
+        [JsonProperty("biography")]
+        public string Biography { get; set; }
+
+        [JsonProperty("external_url")]
+        public string ExternalUrl { get; set; }
+
+        [JsonProperty("chaining_enabled")]
+        public bool ChainingEnabled { get; set; }
+
+        [JsonProperty("presence_disabled")]
+        public bool PresenceDisabled { get; set; }
+
+        [JsonProperty("business_account")]
+        public bool BusinessAccount { get; set; }
+
+        [JsonProperty("usertag_review_enabled")]
+        public bool UsertagReviewEnabled { get; set; }
     }
 }

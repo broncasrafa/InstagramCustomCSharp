@@ -9,6 +9,8 @@
         public const string Reel = "GraphReel";
         public const string HighlightReel = "GraphHighlightReel";
         public const string StoryImage = "GraphStoryImage";
-        public const string StoryVideo = "GraphStoryVideo";        
+        public const string StoryVideo = "GraphStoryVideo";
+        public const string FollowAggregatedStory = "GraphFollowAggregatedStory";
+        public const string LikeAggregatedStory = "GraphLikeAggregatedStory";        
     }
 }

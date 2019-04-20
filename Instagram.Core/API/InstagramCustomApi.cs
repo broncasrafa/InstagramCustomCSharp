@@ -21,6 +21,7 @@ namespace Instagram.Core.API
         private IUserService _userService;
         private ISearchService _searchService;
         private IActionsService _actionService;
+        public IHashtagService _hashtagService;
 
         public bool IsUserAuthenticated { get; private set; }
         public string Cookie { get; private set; }
@@ -151,6 +152,10 @@ namespace Instagram.Core.API
             }
             return _userService.GetShortcodeMedia(shortcode);
         }
+        public IResult<UserInfo> GetUserInfo()
+        {
+            return _userService.GetUserInfo();
+        }
         public IResult<User> GetUser(string username)
         {
             ValidateUser();
@@ -165,9 +170,13 @@ namespace Instagram.Core.API
         {
             return _userService.GetWebDiscoverMedia(limitPerPage, endCursor);
         }
-        public IResult<EdgeActivityCount> GetUserActivity()
+        public IResult<EdgeActivityCount> GetUserActivitySummary()
         {
-            return _userService.GetUserActivity();
+            return _userService.GetUserActivitySummary();
+        }
+        public IResult<ActivityFeed> GetUserActivityFeed()
+        {
+            return _userService.GetUserActivityFeed();
         }
         public IResult<EdgeOwnerToTimelineMedia> GetUserMedias(string userid, string endCursor, int limitPerPage = 12)
         {
@@ -181,7 +190,11 @@ namespace Instagram.Core.API
                 throw new ArgumentException("Username must be specified");
             }
             return _userService.GetAllUserMedias(username, limitPerPage);
-        }        
+        }
+        public IResult<EdgeWebFeedTimeline> GetUserTimelineMedias(string endCursor = null)
+        {
+            return _userService.GetUserTimelineMedias(endCursor);
+        }
         public IResult<EdgeSavedMedia> GetSavedUserMedias(int limitPerPage = 12)
         {            
             return _userService.GetSavedUserMedias(limitPerPage);
@@ -282,8 +295,32 @@ namespace Instagram.Core.API
             }
             return _actionService.Unlike(mediaId);
         }
+        public IResult<string> RequestDownloadDataInformation(string email)
+        {
+            if (email == null)
+            {
+                throw new ArgumentException("E-mail must be specified");
+            }
+            return _actionService.RequestDownloadDataInformation(email);
+        }
 
-
+        public IResult<Hashtag> GetHashtag(string hashtag)
+        {
+            ValidateHashtag(hashtag);
+            return _hashtagService.GetHashtag(hashtag.Trim().Replace(" ", ""));
+        }
+        public IResult<EdgeHashtagToMedia> GetHashtagMedias(string hashtag, string endCursor, int limitPerPage = 12)
+        {
+            if (string.IsNullOrEmpty(hashtag) || string.IsNullOrEmpty(endCursor))
+            {
+                throw new ArgumentException("Hashtag and end_cursor must be specified");
+            }
+            return _hashtagService.GetHashtagMedias(hashtag.Trim().Replace(" ", ""), endCursor, limitPerPage);
+        }
+        public IResult<ShortcodeHashtagMedia> GetShortcodeHashtagMedia(string shortcode)
+        {
+            throw new NotImplementedException();
+        }
 
         #region [ Private Methods ]
         private void ValidateUser()
@@ -293,38 +330,29 @@ namespace Instagram.Core.API
                 throw new ArgumentException("user name and password must be specified");
             }
         }
+        private void ValidateHashtag(string hashtag)
+        {
+            if (string.IsNullOrEmpty(hashtag))
+            {
+                throw new ArgumentException("Hashtag must be specified");
+            }
+        }
         private void ValidadeParamsUserMedia(string userid, string endCursor)
         {
             if (string.IsNullOrEmpty(userid) || string.IsNullOrEmpty(endCursor))
             {
                 throw new ArgumentException("user id and end_cursor must be specified");
             }
-        }
+        }        
         private void InvalidateServices()
         {
             _userService = new UserService(_user);
             _searchService = new SearchService(_user);
             _actionService = new ActionsService(_user);
+            _hashtagService = new HashtagService(_user);
         }
 
         
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         #endregion
     }
 }
