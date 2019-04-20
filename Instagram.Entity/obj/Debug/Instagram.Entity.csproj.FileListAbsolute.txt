@@ -1,0 +1,10 @@
+C:\_MyProjects\_.NET\Projects\InstagramCustom\Instagram.Entity\bin\Debug\Instagram.Entity.dll
+C:\_MyProjects\_.NET\Projects\InstagramCustom\Instagram.Entity\bin\Debug\Instagram.Entity.pdb
+C:\_MyProjects\_.NET\Projects\InstagramCustom\Instagram.Entity\bin\Debug\Newtonsoft.Json.dll
+C:\_MyProjects\_.NET\Projects\InstagramCustom\Instagram.Entity\bin\Debug\Newtonsoft.Json.pdb
+C:\_MyProjects\_.NET\Projects\InstagramCustom\Instagram.Entity\bin\Debug\Newtonsoft.Json.xml
+C:\_MyProjects\_.NET\Projects\InstagramCustom\Instagram.Entity\obj\Debug\Instagram.Entity.csprojAssemblyReference.cache
+C:\_MyProjects\_.NET\Projects\InstagramCustom\Instagram.Entity\obj\Debug\Instagram.Entity.csproj.CoreCompileInputs.cache
+C:\_MyProjects\_.NET\Projects\InstagramCustom\Instagram.Entity\obj\Debug\Instagram.Entity.csproj.CopyComplete
+C:\_MyProjects\_.NET\Projects\InstagramCustom\Instagram.Entity\obj\Debug\Instagram.Entity.dll
+C:\_MyProjects\_.NET\Projects\InstagramCustom\Instagram.Entity\obj\Debug\Instagram.Entity.pdb

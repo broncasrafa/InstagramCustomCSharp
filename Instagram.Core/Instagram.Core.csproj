@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{249499D3-F667-4619-B6D3-84AB7BF16BD8}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Instagram.Core</RootNamespace>
+    <AssemblyName>Instagram.Core</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="API\Builder\IInstagramCustomApiBuilder.cs" />
+    <Compile Include="API\Builder\InstagramCustomApiBuilder.cs" />
+    <Compile Include="API\IInstagramCustomApi.cs" />
+    <Compile Include="API\InstagramCustomApi.cs" />
+    <Compile Include="API\InstagramCustomApiConstants.cs" />
+    <Compile Include="API\Services\ActionsService.cs" />
+    <Compile Include="API\Services\Interfaces\IActionsService.cs" />
+    <Compile Include="API\Services\Interfaces\ISearchService.cs" />
+    <Compile Include="API\Services\Interfaces\IUserService.cs" />
+    <Compile Include="API\Services\SearchService.cs" />
+    <Compile Include="API\Services\UserService.cs" />
+    <Compile Include="Classes\AuthenticatedLogin.cs" />
+    <Compile Include="Classes\Enums\MediaType.cs" />
+    <Compile Include="Classes\Enums\ResponseType.cs" />
+    <Compile Include="Classes\Interfaces\IResult.cs" />
+    <Compile Include="Classes\Response\BadStatusResponse.cs" />
+    <Compile Include="Classes\Response\BaseStatusResponse.cs" />
+    <Compile Include="Classes\Result.cs" />
+    <Compile Include="Classes\ResultInfo.cs" />
+    <Compile Include="Classes\UserSessionData.cs" />
+    <Compile Include="Helpers\CustomExtensions.cs" />
+    <Compile Include="Helpers\ErrorHandlingHelper.cs" />
+    <Compile Include="Helpers\HttpHelper.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Instagram.Entity\Instagram.Entity.csproj">
+      <Project>{05168076-8bcc-4023-823f-43859c3d7bc9}</Project>
+      <Name>Instagram.Entity</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
