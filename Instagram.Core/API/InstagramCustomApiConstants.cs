@@ -71,6 +71,36 @@ namespace Instagram.Core.API
         public const string LIKE_URL = "https://www.instagram.com/web/likes/{0}/like/";
 
         public const string UNLIKE_URL = "https://www.instagram.com/web/likes/{0}/unlike/";
+
+        public const string FOLLOW_URL = "https://www.instagram.com/web/friendships/{0}/follow/";
+
+        public const string UNFOLLOW_URL = "https://www.instagram.com/web/friendships/{0}/unfollow/";
+
+        public const string COMMENT_URL = "https://www.instagram.com/web/comments/{0}/add/";
+
+        public const string DELETE_COMMENT_URL = "https://www.instagram.com/web/comments/{0}/delete/{1}/";
+
+        public const string LIKE_COMMENT_URL = "https://www.instagram.com/web/comments/like/{0}/";
+
+        public const string UNLIKE_COMMENT_URL = "https://www.instagram.com/web/comments/unlike/{0}/";
+
+        public const string SAVE_MEDIA_URL = "https://www.instagram.com/web/save/{0}/save/";
+
+        public const string UNSAVE_MEDIA_URL = "https://www.instagram.com/web/save/{0}/unsave/";
+
+        public const string MEDIA_LIKES_INIT = "https://www.instagram.com/graphql/query/?query_hash=e0f59e4a1c8d78d0161873bc2ee7ec44&variables=%7B%22shortcode%22%3A%22{0}%22%2C%22include_reel%22%3Atrue%2C%22first%22%3A{1}%7D";
+        public const string MEDIA_LIKES_URL =  "https://www.instagram.com/graphql/query/?query_hash=e0f59e4a1c8d78d0161873bc2ee7ec44&variables=%7B%22shortcode%22%3A%22{0}%22%2C%22include_reel%22%3Atrue%2C%22first%22%3A{1}%2C%22after%22%3A%22{2}%22%7D";
+
+        public const string MEDIA_INFO_URL = "https://www.instagram.com/graphql/query/?query_hash=477b65a610463740ccdb83135b2014db&variables=%7B%22shortcode%22%3A%22{0}%22%2C%22child_comment_count%22%3A10%2C%22fetch_comment_count%22%3A40%2C%22parent_comment_count%22%3A40%2C%22has_threaded_comments%22%3Atrue%7D";
+
+        public const string MEDIA_COMMENTS_URL = "https://www.instagram.com/graphql/query/?query_hash=97b41c52301f77ce508f55e66d17620e&variables=%7B%22shortcode%22%3A%22{0}%22%2C%22first%22%3A{1}%2C%22after%22%3A%22%7B%5C%22cached_comments_cursor%5C%22%3A+%5C%22{2}%5C%22%2C+%5C%22bifilter_token%5C%22%3A+%5C%22{3}%5C%22%7D%22%7D";
+
+        public const string LIKES_FROM_COMMENT_INIT = "https://www.instagram.com/graphql/query/?query_hash=5f0b1f6281e72053cbc07909c8d154ae&variables=%7B%22comment_id%22%3A%22{0}%22%2C%22first%22%3A{1}%7D";
+        public const string LIKES_FROM_COMMENT_URL =  "https://www.instagram.com/graphql/query/?query_hash=5f0b1f6281e72053cbc07909c8d154ae&variables=%7B%22comment_id%22%3A%22{0}%22%2C%22first%22%3A{1}%2C%22after%22%3A%22{2}%22%7D";
+
+        public const string COMMENT_REPLIES_INIT = "https://www.instagram.com/graphql/query/?query_hash=51fdd02b67508306ad4484ff574a0b62&variables=%7B%22comment_id%22%3A%22{0}%22%2C%22first%22%3A{1}%7D";
+        public const string COMMENT_REPLIES_URL =  "https://www.instagram.com/graphql/query/?query_hash=51fdd02b67508306ad4484ff574a0b62&variables=%7B%22comment_id%22%3A%22{0}%22%2C%22first%22%3A{1}%2C%22after%22%3A%22{2}%22%7D";
+
     }
 }
 

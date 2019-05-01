@@ -22,6 +22,7 @@ namespace Instagram.Core.API
         private ISearchService _searchService;
         private IActionsService _actionService;
         public IHashtagService _hashtagService;
+        public IMediaService _mediaService;
 
         public bool IsUserAuthenticated { get; private set; }
         public string Cookie { get; private set; }
@@ -281,7 +282,7 @@ namespace Instagram.Core.API
         }
         public IResult<string> Like(string mediaId)
         {
-            if (mediaId == null)
+            if (String.IsNullOrEmpty(mediaId))
             {
                 throw new ArgumentException("MediaId must be specified");
             }
@@ -289,7 +290,7 @@ namespace Instagram.Core.API
         }
         public IResult<string> Unlike(string mediaId)
         {
-            if (mediaId == null)
+            if (String.IsNullOrEmpty(mediaId))
             {
                 throw new ArgumentException("MediaId must be specified");
             }
@@ -303,7 +304,70 @@ namespace Instagram.Core.API
             }
             return _actionService.RequestDownloadDataInformation(email);
         }
-
+        public IResult<string> Follow(string userId)
+        {
+            if (String.IsNullOrEmpty(userId))
+            {
+                throw new ArgumentException("UserId must be specified");
+            }
+            return _actionService.Follow(userId);
+        }
+        public IResult<string> Unfollow(string userId)
+        {
+            if (String.IsNullOrEmpty(userId))
+            {
+                throw new ArgumentException("UserId must be specified");
+            }
+            return _actionService.Unfollow(userId);
+        }
+        public IResult<CommentResponse> Comment(string mediaId, string text)
+        {
+            if(String.IsNullOrEmpty(text) || String.IsNullOrEmpty(mediaId))
+            {
+                throw new ArgumentException("MediaId and text must be specified");
+            }
+            return _actionService.Comment(mediaId, text);
+        }
+        public IResult<string> DeleteComment(string mediaId, string commentId)
+        {
+            if (String.IsNullOrEmpty(mediaId) || String.IsNullOrEmpty(commentId))
+            {
+                throw new ArgumentException("MediaId and commentId must be specified");
+            }
+            return _actionService.DeleteComment(mediaId, commentId);
+        }
+        public IResult<string> LikeComment(string commentId)
+        {
+            if (String.IsNullOrEmpty(commentId))
+            {
+                throw new ArgumentException("CommentId must be specified");
+            }
+            return _actionService.LikeComment(commentId);
+        }
+        public IResult<string> UnlikeComment(string commentId)
+        {
+            if (String.IsNullOrEmpty(commentId))
+            {
+                throw new ArgumentException("CommentId must be specified");
+            }
+            return _actionService.UnlikeComment(commentId);
+        }
+        public IResult<string> SaveMedia(string mediaId)
+        {
+            if (String.IsNullOrEmpty(mediaId))
+            {
+                throw new ArgumentException("MediaId must be specified");
+            }
+            return _actionService.SaveMedia(mediaId);
+        }
+        public IResult<string> UnsaveMedia(string mediaId)
+        {
+            if (String.IsNullOrEmpty(mediaId))
+            {
+                throw new ArgumentException("MediaId must be specified");
+            }
+            return _actionService.UnsaveMedia(mediaId);
+        }
         public IResult<Hashtag> GetHashtag(string hashtag)
         {
             ValidateHashtag(hashtag);
@@ -320,7 +384,65 @@ namespace Instagram.Core.API
         public IResult<ShortcodeHashtagMedia> GetShortcodeHashtagMedia(string shortcode)
         {
             throw new NotImplementedException();
+        }        
+        public IResult<ShortcodeMediaLikes> GetMediaLikes(string shortcode, string endCursor = null, int limitPerPage = 24)
+        {
+            if (string.IsNullOrEmpty(shortcode))
+            {
+                throw new ArgumentException("Shortcode must be specified");
+            }
+            return _userService.GetMediaLikes(shortcode, endCursor, limitPerPage);
         }
+        public IResult<ShortcodeMedia> GetMediaInfoData(string shortcode)
+        {
+            if (string.IsNullOrEmpty(shortcode))
+            {
+                throw new ArgumentException("Shortcode must be specified");
+            }
+            return _mediaService.GetMediaInfoData(shortcode);
+        }
+        public IResult<EdgeMediaToParentComment> GetMediaComments(string shortcode, string endCursor, int limitPerPage = 12)
+        {
+            if (string.IsNullOrEmpty(shortcode) || string.IsNullOrEmpty(endCursor))
+            {
+                throw new ArgumentException("Hashtag and end_cursor must be specified");
+            }
+            return _mediaService.GetMediaComments(shortcode, endCursor, limitPerPage);
+        }
+        public IResult<Comment> GetLikesFromComment(string comment_id, string endCursor = null, int limitPerPage = 48)
+        {
+            if (string.IsNullOrEmpty(comment_id))
+            {
+                throw new ArgumentException("comment_id must be specified");
+            }
+            return _mediaService.GetLikesFromComment(comment_id, endCursor, limitPerPage);
+        }
+        public IResult<Comment> GetCommentReplies(string comment_id, string endCursor = null, int limitPerPage = 48)
+        {
+            if (string.IsNullOrEmpty(comment_id))
+            {
+                throw new ArgumentException("comment_id must be specified");
+            }
+            return _mediaService.GetCommentReplies(comment_id, endCursor, limitPerPage);
+        }
+        public IResult<CommentResponse> ReplyComment(string mediaId, string comment_id, string text)
+        {
+            if (String.IsNullOrEmpty(text) || String.IsNullOrEmpty(mediaId) || String.IsNullOrEmpty(comment_id))
+            {
+                throw new ArgumentException("MediaId, text and comment_id must be specified");
+            }
+            return _actionService.ReplyComment(mediaId, comment_id, text);
+        }
+        public IResult<string> DeleteReplyComment(string mediaId, string repliedId)
+        {
+            if (String.IsNullOrEmpty(mediaId) || String.IsNullOrEmpty(repliedId))
+            {
+                throw new ArgumentException("MediaId and repliedId must be specified");
+            }
+            return _actionService.DeleteReplyComment(mediaId, repliedId);
+        }
+
+
 
         #region [ Private Methods ]
         private void ValidateUser()
@@ -350,9 +472,8 @@ namespace Instagram.Core.API
             _searchService = new SearchService(_user);
             _actionService = new ActionsService(_user);
             _hashtagService = new HashtagService(_user);
-        }
-
-        
+            _mediaService = new MediaService(_user);
+        }        
         #endregion
     }
 }

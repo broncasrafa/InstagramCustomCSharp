@@ -26,5 +26,6 @@ namespace Instagram.Core.API.Services.Interfaces
         IResult<DataStoryMedia> GetFeaturedStoriesByHighlightReelIds(string[] highlight_reel_ids);
         IResult<DataStoryMedia> GetStoryByUserIds(string[] userIds);
         IResult<DataStoryMedia> GetSuggestedUsers(string userId);
+        IResult<ShortcodeMediaLikes> GetMediaLikes(string shortcode, string endCursor = null, int limitPerPage = 24);
     }
 }

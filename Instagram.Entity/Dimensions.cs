@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+
 namespace Instagram.Entity
 {
     public class Dimensions

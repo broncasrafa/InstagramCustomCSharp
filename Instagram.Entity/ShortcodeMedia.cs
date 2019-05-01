@@ -3,6 +3,19 @@ using Newtonsoft.Json;
 
 namespace Instagram.Entity
 {
+    public class ShortcodeData
+    {
+        [JsonProperty("data")]
+        public Shortcode Data { get; set; }
+
+        [JsonProperty("status")]
+        public string Status { get; set; }
+    }
+    public class Shortcode
+    {
+        [JsonProperty("shortcode_media")]
+        public ShortcodeMedia ShortcodeMedia { get; set; }
+    }
     public class ShortcodeMedia
     {
         [JsonProperty("__typename")]
@@ -71,6 +84,9 @@ namespace Instagram.Entity
         [JsonProperty("owner")]
         public Owner Owner { get; set; }
 
+        [JsonProperty("edge_media_to_tagged_user")]
+        public EdgeMediaToTaggedUser EdgeMediaToTaggedUser { get; set; }
+
         [JsonProperty("edge_media_to_caption")]
         public EdgeMediaToCaption EdgeMediaToCaption { get; set; }
 
@@ -82,5 +98,11 @@ namespace Instagram.Entity
 
         [JsonProperty("edge_sidecar_to_children")]
         public EdgeSidecarToChildren EdgeSidecarToChildren { get; set; }
+
+        [JsonProperty("edge_media_to_parent_comment")]
+        public EdgeMediaToParentComment EdgeMediaToParentComment { get; set; }
+
+        [JsonProperty("edge_media_preview_comment")]
+        public EdgeMediaPreviewComment EdgeMediaPreviewComment { get; set; }
     }
 }

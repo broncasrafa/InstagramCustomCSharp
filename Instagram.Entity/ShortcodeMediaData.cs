@@ -170,4 +170,30 @@ namespace Instagram.Entity
         public EdgeSidecarToChildren EdgeSidecarToChildren { get; set; }
     }
 
+
+        
+    public class ShortcodeMediaLikesData
+    {
+        [JsonProperty("data")]
+        public ShortcodeMediaLikes Data { get; set; }
+
+        [JsonProperty("status")]
+        public string Status { get; set; }
+    }
+    public class ShortcodeMediaLikes
+    {
+        [JsonProperty("shortcode_media")]
+        public ShortcodeLikesMedia ShortcodeLikesMedia { get; set; }
+    }
+    public class ShortcodeLikesMedia
+    {
+        [JsonProperty("id")]
+        public string Id { get; set; }
+
+        [JsonProperty("shortcode")]
+        public string Shortcode { get; set; }
+
+        [JsonProperty("edge_liked_by")]
+        public EdgeLikedBy EdgeLikedBy { get; set; }
+    }
 }

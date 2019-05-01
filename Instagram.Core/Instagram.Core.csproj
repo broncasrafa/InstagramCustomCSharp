@@ -54,8 +54,10 @@
     <Compile Include="API\Services\HashtagService.cs" />
     <Compile Include="API\Services\Interfaces\IActionsService.cs" />
     <Compile Include="API\Services\Interfaces\IHashtagService.cs" />
+    <Compile Include="API\Services\Interfaces\IMediaService.cs" />
     <Compile Include="API\Services\Interfaces\ISearchService.cs" />
     <Compile Include="API\Services\Interfaces\IUserService.cs" />
+    <Compile Include="API\Services\MediaService.cs" />
     <Compile Include="API\Services\SearchService.cs" />
     <Compile Include="API\Services\UserService.cs" />
     <Compile Include="Classes\AuthenticatedLogin.cs" />

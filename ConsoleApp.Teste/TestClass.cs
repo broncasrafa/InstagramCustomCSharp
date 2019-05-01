@@ -98,24 +98,62 @@ namespace ConsoleApp.Teste
             return _InstagramCustomApi.GetSuggestedUsers(userId).Data;
         }
 
-        public Search Search(string query)
+        public Search SearchTest(string query)
         {
             return _InstagramCustomApi.Search(query).Data;
         }
 
-        public User GetWebDiscoverMedia(int limitPerPage = 24, int endCursor = 0)
+        public User GetWebDiscoverMediaTest(int limitPerPage = 24, int endCursor = 0)
         {
             return _InstagramCustomApi.GetWebDiscoverMedia(limitPerPage, endCursor).Data;
         }
 
-        public string Like(string mediaId)
+        public string LikeTest(string mediaId)
         {
             return _InstagramCustomApi.Like(mediaId).Data;
         }
 
-        public string Unlike(string mediaId)
+        public string UnlikeTest(string mediaId)
         {
             return _InstagramCustomApi.Unlike(mediaId).Data;
+        }
+
+        public string FollowTest(string userId)
+        {
+            return _InstagramCustomApi.Follow(userId).Data;
+        }
+
+        public string UnfollowTest(string userId)
+        {
+            return _InstagramCustomApi.Unfollow(userId).Data;
+        }
+
+        public CommentResponse CommentTest(string mediaId, string text)
+        {
+            return _InstagramCustomApi.Comment(mediaId, text).Data;
+        }
+
+        public string DeleteCommentTest(string mediaId, string commentId)
+        {
+            return _InstagramCustomApi.DeleteComment(mediaId, commentId).Data;
+        }
+        public string LikeCommentTest(string commentId)
+        {
+            return _InstagramCustomApi.LikeComment(commentId).Data;
+        }
+        public string UnlikeCommentTest(string commentId)
+        {
+            return _InstagramCustomApi.UnlikeComment(commentId).Data;
+        }
+
+        public string SaveMediaTest(string mediaId)
+        {
+            return _InstagramCustomApi.SaveMedia(mediaId).Data;
+        }
+
+        public string UnSaveMediaTest(string mediaId)
+        {
+            return _InstagramCustomApi.UnsaveMedia(mediaId).Data;
         }
 
         public string RequestDownloadDataInformationTest(string email)
@@ -137,5 +175,31 @@ namespace ConsoleApp.Teste
         {
             return _InstagramCustomApi.GetUserInfo().Data;
         }
+
+        public ShortcodeMediaLikes GetMediaLikesTest(string shortcode, string endCursor = null, int limitPerPage = 24)
+        {
+            return _InstagramCustomApi.GetMediaLikes(shortcode, endCursor, limitPerPage).Data;
+        }
+
+        public ShortcodeMedia GetMediaInfoDataTest(string shortcode)
+        {
+            return _InstagramCustomApi.GetMediaInfoData(shortcode).Data;
+        }
+
+        public EdgeMediaToParentComment GetMediaCommentsTest(string shortcode, string endCursor, int limitPerPage = 12)
+        {
+            return _InstagramCustomApi.GetMediaComments(shortcode, endCursor, limitPerPage).Data;
+        }
+
+        public Comment GetLikesFromCommentTest(string comment_id, string endCursor = null, int limitPerPage = 48)
+        {
+            return _InstagramCustomApi.GetLikesFromComment(comment_id, endCursor, limitPerPage).Data;
+        }
+
+        public Comment GetCommentRepliesTest(string comment_id, string endCursor = null, int limitPerPage = 48)
+        {
+            return _InstagramCustomApi.GetCommentReplies(comment_id, endCursor, limitPerPage).Data;
+        }
+        
     }
 }

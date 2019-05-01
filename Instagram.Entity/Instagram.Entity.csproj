@@ -45,6 +45,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ActivityFeed.cs" />
+    <Compile Include="Comment.cs" />
+    <Compile Include="CommentResponse.cs" />
     <Compile Include="DashInfo.cs" />
     <Compile Include="Dimensions.cs" />
     <Compile Include="DisplayResource.cs" />

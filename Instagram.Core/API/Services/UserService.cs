@@ -709,7 +709,47 @@ namespace Instagram.Core.API.Services
                 return Result.Fail<DataStoryMedia>(ex.Message);
             }
         }
+        public IResult<ShortcodeMediaLikes> GetMediaLikes(string shortcode, string endCursor = null, int limitPerPage = 24)
+        {
+            try
+            {
+                string uri = string.Empty;
+                string variables = string.Empty;
 
+                if (endCursor == null)
+                {
+                    uri = string.Format(InstagramCustomApiConstants.MEDIA_LIKES_INIT, shortcode, limitPerPage);
+                    variables = string.Format("{0}:{{\"shortcode\":\"{1}\",\"include_reel\":true,\"first\":{2} }}", _user.UserRhxGis, shortcode, limitPerPage);
+                }
+                else
+                {
+                    uri = string.Format(InstagramCustomApiConstants.MEDIA_LIKES_URL, shortcode, limitPerPage, endCursor);
+                    variables = string.Format("{0}:{{\"shortcode\":\"{1}\",\"include_reel\":true,\"first\":{2},\"after\":\"{3}\"}}", _user.UserRhxGis, shortcode, limitPerPage, endCursor);
+                }
+
+                var signature = ApplicationHelper.CreateMD5(variables);
+
+                var request = HttpHelper.GetDefaultRequest(uri);
+                request.Headers["X-Instagram-GIS"] = signature;
+                request.Headers["Cookie"] = _user.UserCookie;
+
+                var response = HttpHelper.GetDefaultResponse(request);
+                var json = response.ReadAsString();
+
+                if (response.StatusCode != HttpStatusCode.OK)
+                {
+                    return Result.UnExpectedResponse<ShortcodeMediaLikes>(response, json);
+                }
+
+                var objRetorno = JsonConvert.DeserializeObject<ShortcodeMediaLikesData>(json);
+
+                return Result.Success(objRetorno.Data);
+            }
+            catch (Exception ex)
+            {
+                return Result.Fail<ShortcodeMediaLikes>(ex.Message);
+            }
+        }
 
 
         #region [ Private Methods ]                
@@ -992,7 +1032,9 @@ namespace Instagram.Core.API.Services
             {
                 return Result.Fail<EdgeUserToPhotosOfYouNode>(ex.Message);
             }
-        }        
+        }
+
+        
         #endregion
     }
 }
